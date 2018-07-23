@@ -1,6 +1,6 @@
 let _singleton = Symbol();
 class CourseService {
-  COURSE_API_URL = 'http://localhost:8080/api/course';
+  COURSE_API_URL = 'https://cs4550-bk610-react-server.herokuapp.com/api/course';
 
   findCourseById(courseId) {
     return fetch(this.COURSE_API_URL + "/" + courseId)
