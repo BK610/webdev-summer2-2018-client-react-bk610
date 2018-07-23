@@ -1,6 +1,14 @@
+
 let _singleton = Symbol();
 class CourseService {
   COURSE_API_URL = 'http://localhost:8080/api/course';
+
+  findCourseById(courseId) {
+    return fetch(this.COURSE_API_URL + "/" + courseId)
+      .then(function(response){
+        return response.json();
+      });
+  }
 
   deleteCourse(courseId) {
     return fetch(this.COURSE_API_URL + '/' + courseId, {
