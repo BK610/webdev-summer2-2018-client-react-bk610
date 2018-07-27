@@ -160,11 +160,31 @@ class App extends React.Component {
     return(
       <Router>
         <div className="container-fluid">
-          <Link to="/whiteboard">WhiteBoard</Link> |
-          <Link to="/hello">Hello</Link> |
-          <Link to="/page1">Page 1</Link> |
-          <Link to="/page2">Page 2</Link> |
-          <Link to="/es6">ES6</Link>
+          <Link to="/whiteboard">
+              <button class="btn btn-primary">
+                  WhiteBoard
+              </button>
+          </Link>
+          <Link to="/hello">
+              <button class="btn btn-primary">
+                      Hello
+              </button>
+          </Link>
+          <Link to="/page1">
+              <button class="btn btn-primary">
+                  Page 1
+              </button>
+          </Link>
+          <Link to="/page2">
+              <button class="btn btn-primary">
+                  Page 2
+              </button>
+          </Link>
+          <Link to="/es6">
+              <button class="btn btn-primary">
+                  ES6
+              </button>
+          </Link>
           <Route path='/whiteboard' component={WhiteBoard}/>
           <Route path='/page1' component={Page1}/>
           <Route path='/page2' component={Page2}/>
