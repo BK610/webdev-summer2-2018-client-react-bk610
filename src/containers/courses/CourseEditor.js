@@ -5,20 +5,17 @@ import ModuleList from "../modules/ModuleList"
 export default class CourseEditor extends React.Component {
   constructor(props) {
     super(props);
-    this.service = CourseService.instance
+    this.service = CourseService.instance;
     this.state = {
       course: {
         modules: [{
           title: '',
           lessons: [{
-            title: '',
-            topics: [{
-              title: ''
-            }]
+            title: ''
           }]
         }]
       }
-    }
+    };
   }
   componentDidMount() {
     this.service.findCourseById(this.props.match.params.courseId)

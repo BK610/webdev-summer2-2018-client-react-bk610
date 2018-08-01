@@ -10,7 +10,6 @@ class CourseList extends React.Component {
       newCourse: {},
       courses: []
     };
-
   }
 
   componentDidMount() {
@@ -21,7 +20,6 @@ class CourseList extends React.Component {
   }
 
   formChanged = (event) => {
-    // console.log(event.target.value);
     this.setState({newCourse: {
       title: event.target.value
     }})

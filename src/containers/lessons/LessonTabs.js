@@ -1,5 +1,5 @@
 import React from  'react'
-import TopicPills from "../topics/TopicPills";
+// import TopicPills from "../topics/TopicPills";
 
 export default class LessonTabs extends React.Component {
   constructor(props) {
@@ -28,7 +28,7 @@ export default class LessonTabs extends React.Component {
           )}
         </ul>
         {this.state.selectedLessonIndex}
-        <TopicPills lesson={this.props.module.lessons[this.state.selectedLessonIndex]}/>
+        {/*<TopicPills lesson={this.props.module.lessons[this.state.selectedLessonIndex]}/>*/}
       </div>
     )
   }
