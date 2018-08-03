@@ -1,6 +1,8 @@
 import {connect} from 'react-redux'
 import WidgetListComponent from './WidgetListComponent'
 
+const DB_URL = "https://cs4550-summer2-2018-bk610.herokuapp.com/api/widget";
+
 const stateToPropertyMapper = state => (
     {
         widgets: state.widgets
@@ -25,7 +27,7 @@ const dispatcherToPropertyMapper = dispatch => (
             type: 'SAVE_WIDGETS'
         }),
         loadAllWidgets: () => {
-            fetch('http://localhost:8080/api/widget')
+            fetch(DB_URL)
                 .then(response => response.json())
                 .then(widgets => dispatch({
                     type: 'FIND_ALL_WIDGETS',

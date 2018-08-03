@@ -41,7 +41,7 @@ class CourseList extends React.Component {
     {
     return (
       <div>
-        <h2>Course List</h2>
+        <h3>Course List</h3>
         <table className="table">
           <thead>
             <tr>

@@ -5,6 +5,10 @@ export default class LessonTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      module: "",
+      lessons: [{
+        title: ""
+      }],
       selectedLessonIndex: 0
     }
   }
@@ -14,8 +18,9 @@ export default class LessonTabs extends React.Component {
     })
   }
   render() {
+    console.log(this.props);
     return(
-      <div>
+      <div className="col-sm">
         <h3>Lesson Tabs {this.props.module.lessons.length}</h3>
         <ul>
           {this.props.module.lessons.map(

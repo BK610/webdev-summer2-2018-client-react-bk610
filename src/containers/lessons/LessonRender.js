@@ -1,10 +1,10 @@
 import React from 'react'
 
-class LessonTabs extends React.Component {
+class LessonRender extends React.Component {
   render() {
     return(
       <div>
-        <h3>Lesson Tabs</h3>
+        <h3>Lessons</h3>
 
         <ul className="nav nav-tabs">
           <li className="nav-item">
@@ -20,11 +20,9 @@ class LessonTabs extends React.Component {
             <a className="nav-link disabled" href="#">Disabled</a>
           </li>
         </ul>
-
-
       </div>
     )
   }
 }
 
-export default LessonTabs;
+export default LessonRender;

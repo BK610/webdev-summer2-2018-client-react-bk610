@@ -4,7 +4,7 @@ import {WidgetType2} from './WidgetType2'
 import {WidgetType3} from './WidgetType3'
 import {HeadingWidget} from "./HeadingWidget"
 import {ListWidget} from "./ListWidget";
-import {YouTubeWidget} from "./YouTubeWIdget"
+import {YouTubeWidget} from "./YouTubeWidget"
 
 class WidgetListComponent extends React.Component {
     constructor(props) {
@@ -18,7 +18,7 @@ class WidgetListComponent extends React.Component {
     //   this.props.widgets = newProps.widgets;
     // }
     render() {
-        console.log('qwe');
+        // console.log('qwe');
         return(
             <div>
                 <button onClick={this.props.saveWidgets}

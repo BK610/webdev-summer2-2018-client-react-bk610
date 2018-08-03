@@ -5,7 +5,7 @@ import CourseList from './CourseList';
 import CourseRow from "./CourseRow";
 import CourseService from "../../services/CourseService";
 
-export default class CourseManager extends React.Component {
+export default class WhiteBoard extends React.Component {
     constructor() {
         super();
         this.courseService = CourseService.instance;
@@ -43,7 +43,7 @@ export default class CourseManager extends React.Component {
     render() {
         return (
             <div>
-                <h2>Course Manager</h2>
+                <h2>WhiteBoard</h2>
                 <CourseList/>
                 {/*<CourseEditor/>*/}
             </div>
