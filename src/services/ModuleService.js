@@ -16,13 +16,15 @@ export default class ModuleService {
     }
 
     createModule(courseId, module) {
-        return fetch(this.MODULE_COURSE_API_URL.replace('courseId', courseId),
+        return fetch(this.MODULE_COURSE_API_URL
+                .replace('courseId', courseId),
             {
                 body: JSON.stringify(module),
-                headers: { 'Content-Type': 'application/json' },
+                headers: {'Content-Type': 'application/json'},
                 method: 'POST'
-            }).then(function (response)
-        { return response.json(); })
+            }).then(function (response) {
+            return response.json();
+        })
     }
 
     deleteModule(moduleId) {
@@ -60,7 +62,7 @@ export default class ModuleService {
     }
 
     static get instance() {
-        if(!this[_singleton])
+        if (!this[_singleton])
             this[_singleton] = new ModuleService(_singleton);
         return this[_singleton]
     }

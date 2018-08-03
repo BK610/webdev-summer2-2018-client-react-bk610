@@ -9,7 +9,7 @@ import {BrowserRouter as Router, Route, Link} from 'react-router-dom'
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import '../node_modules/font-awesome/css/font-awesome.min.css';
 import WhiteBoard from './containers/courses/WhiteBoard'
-import LessonRender from './containers/lessons/LessonRender'
+import LessonRow from './containers/lessons/LessonRow'
 import TopicPills from './TopicPills'
 import CourseList from './containers/courses/CourseList'
 import ES6 from './containers/es6/es6'
@@ -18,6 +18,7 @@ import WidgetListComponent from './containers/widgets/WidgetListComponent'
 import {widgetReducer} from "./reducers/widgetReducer";
 import WidgetListContainer from "./containers/widgets/WidgetListContainer";
 import ModuleList from "./containers/modules/ModuleList";
+import LessonList from "./containers/lessons/LessonList";
 
 // const ModuleListItemStateless = ({title}) =>
 //     <li className="list-group-item">
@@ -132,7 +133,7 @@ import ModuleList from "./containers/modules/ModuleList";
 //
 //                 {/*<TopicPills/>*/}
 //
-//                 {/*<LessonTabs/>*/}
+//                 {/*<LessonList/>*/}
 //
 //                 {/*<ModuleList/>*/}
 //
@@ -181,8 +182,6 @@ class App extends React.Component {
                         <Route path='/pageParam/:something' component={PageParam}/>
                         <Route path='/es6' component={ES6}/>
                         <Route path='/course/:courseId' component={CourseEditor}/>
-                        <Route path='/course/:courseId/module' component={ModuleList}/>
-                        <Route path='/course/:courseId/module/:moduleId/lessons' component={LessonRender}/>
                     </div>
                 </Router>
             </Provider>

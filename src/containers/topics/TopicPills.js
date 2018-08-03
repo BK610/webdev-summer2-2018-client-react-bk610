@@ -5,9 +5,9 @@ export default class TopicPills extends React.Component {
     return(
       <div>
         <h3>Topic Pills</h3>
-        {this.props.lesson.topics.length}
+        {this.props.newLesson.topics.length}
         <ul>
-          {this.props.lesson.topics.map(
+          {this.props.newLesson.topics.map(
             (lesson, i) => {
               return (
                 <li key={i}>{lesson.title}</li>

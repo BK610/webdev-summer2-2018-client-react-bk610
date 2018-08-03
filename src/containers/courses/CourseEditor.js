@@ -2,6 +2,7 @@ import React from 'react'
 import CourseService from "../../services/CourseService";
 import ModuleList from "../modules/ModuleList"
 import {Route} from "react-router-dom";
+import LessonList from "../lessons/LessonList";
 
 export default class CourseEditor extends React.Component {
     constructor(props) {
@@ -11,25 +12,30 @@ export default class CourseEditor extends React.Component {
             title: ''
         };
 
-        this.service = CourseService.instance;
+        this.editedName = "";
+        this.courseService = CourseService.instance;
         this.componentDidMount = this.componentDidMount.bind(this);
         this.titleChanged = this.titleChanged.bind(this);
+        this.updateCourse = this.updateCourse.bind(this);
         this.setState = this.setState.bind(this);
     }
 
     componentDidMount() {
         this.setState({courseId: this.props.match.params.courseId})
-        this.service.findCourseById(this.props.match.params.courseId)
+        this.courseService.findCourseById(this.props.match.params.courseId)
             .then((course) => this.setState({title: course.title}));
     }
 
     titleChanged(event) {
-        console.log(event);
-        console.log(this);
+        this.editedName = event.target.value;
+    }
+
+    updateCourse() {
+        this.courseService.updateCourse(this.state.courseId, this.state)
+        ;
     }
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <div className='card-header'>
@@ -37,8 +43,6 @@ export default class CourseEditor extends React.Component {
                     <div className="row">
                         <input onChange={this.titleChanged}
                                className='form-control'
-                               id='titleFld'
-                               style={{width: 200}}
                                placeholder='New Title'/>
                         <button className="btn btn-outline-secondary"
                                 onClick={this.updateCourse}>
@@ -46,20 +50,16 @@ export default class CourseEditor extends React.Component {
                             </i>
                         </button>
                     </div>
-                    {/*<ModuleList courseId={this.state.courseId}/>*/}
-                    <Route path='/course/:courseId/module' component={ModuleList}/>
                 </div>
                 <div className="row" style={{paddingTop: 20}}>
-                    <div className="col-4">
+                    <div className="col-sm">
                         <ModuleList courseId={this.state.courseId}/>
                     </div>
-                    <div className="col-8">
-                        {/*<Route path="/course/:courseId/module/:moduleId"*/}
-                               {/*component={LessonTabs}>*/}
-                        {/*</Route>*/}
-                        {/*<Route path="/course/:courseId/module/:moduleId/lesson/:lessonId"*/}
-                               {/*component={App}>*/}
-                        {/*</Route>*/}
+                    <div className="col-sm">
+                        {/*<LessonList courseId={this.state.courseId}/>*/}
+                        <Route path="/course/:courseId/module/:moduleId"
+                               component={LessonList}>
+                        </Route>
                     </div>
                 </div>
                 <div>
