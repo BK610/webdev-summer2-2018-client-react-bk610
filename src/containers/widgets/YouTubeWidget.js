@@ -8,15 +8,15 @@ export const YouTubeWidget = ({widget, updateWidget}) => {
             <input ref={node => src = node}
                    id="URL"
                    onChange={() => {
-                       widget.src = src.value;
+                       widget.url = src.value;
                        updateWidget(widget);
                    }}
                    className="form-control"/>
             <h4>Preview</h4>
-            {widget.src}
+            {widget.url}
             <iframe width="560"
                     height="315"
-                    src={`https://www.youtube.com/embed/${widget.src}`}
+                    src={`https://www.youtube.com/embed/${widget.url}`}
                     frameBorder="0"
                     allow="autoplay; encrypted-media"
                     allowFullScreen></iframe>
