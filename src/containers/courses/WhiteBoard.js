@@ -45,7 +45,6 @@ export default class WhiteBoard extends React.Component {
             <div>
                 <h2>WhiteBoard</h2>
                 <CourseList/>
-                {/*<CourseEditor/>*/}
             </div>
         )
     }

@@ -1,5 +1,6 @@
 import React from 'react'
 import LessonService from "../../services/LessonService";
+import Link from "react-router-dom/es/Link";
 
 class LessonRow extends React.Component {
 
@@ -22,7 +23,11 @@ class LessonRow extends React.Component {
         return (
             <div>
                 <li className="list-group-item">
-                    {this.props.lesson.title}
+                    <Link to={`/course/${this.props.courseId}`
+                            + `/module/${this.props.moduleId}`
+                            + `/lesson/${this.props.lesson.id}`}>
+                        {this.props.lesson.title}
+                    </Link>
                     <span className="float-right">
                     <button onClick={this.delete}
                             className="btn btn-secondary">

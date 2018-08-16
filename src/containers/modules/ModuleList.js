@@ -1,5 +1,4 @@
 import React from 'react'
-import LessonList from '../lessons/LessonList'
 import ModuleService from "../../services/ModuleService";
 import ModuleRow from "./ModuleRow";
 
@@ -72,7 +71,7 @@ export default class ModuleList extends React.Component {
     render() {
         return (
             <div>
-                <h3>Modules for course: {this.state.courseId}</h3>
+                <h3>Modules</h3>
                 <input onChange={this.titleChanged}
                        placeholder="New Module"
                        className="form-control"/>

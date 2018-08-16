@@ -1,38 +1,37 @@
 import React from 'react'
 
 export const HeadingWidget =
-    ({widget, updateWidget}) =>
-    {
+    ({widget, preview, textChange, sizeChange, titleChange}) => {
+        let title;
         let text;
         let size;
-        return(
+        return (
             <div>
-                <h3>Heading Widget</h3>
-                <label htmlFor="text">Heading Text</label>
-                <input onChange={() => {
-                    widget.text = text.value;
-                    updateWidget(widget)
-                }}
-                       ref={node => text = node}
-                       className="form-control" id="text"
-                       placeholder="Heading Text"/>
-                <label htmlFor="size">Heading Size</label>
-                <select onChange={() => {
-                    widget.size = parseInt(size.value);
-                    updateWidget(widget)
-                }}
-                        ref={node => size = node}
-                        className="form-control" id="size">
-                    <option value="1">Heading 1</option>
-                    <option value="2">Heading 2</option>
-                    <option value="3">Heading 3</option>
-                    <option value="4">Heading 4</option>
-                </select>
-                <h4>Preview</h4>
-                {widget.size === '1' && <h1>{widget.text}</h1>}
-                {widget.size === '2' && <h2>{widget.text}</h2>}
-                {widget.size === '3' && <h3>{widget.text}</h3>}
-                {widget.size === '4' && <h4>{widget.text}</h4>}
+                <div hidden={preview}>
+                    <h3>Heading Widget</h3>
+                    <input onChange={() => titleChange(widget.id, title.value)}
+                           value={widget.name}
+                           className="form-control"
+                           placeholder="Widget title"
+                           ref={node => title = node}/>
+                    <input onChange={() => textChange(widget.id, text.value)}
+                           value={widget.text}
+                           className="form-control"
+                           placeholder="Heading text"
+                           ref={node => text = node}/>
+                    <select onChange={() => sizeChange(widget.id, size.value)}
+                            value={widget.size}
+                            className="form-control"
+                            ref={node => size = node}>
+                        <option value="1">Heading size 1</option>
+                        <option value="2">Heading size 2</option>
+                        <option value="3">Heading size 3</option>
+                    </select>
+                    <h5 style={{paddingTop: 10}}>Preview</h5>
+                </div>
+                {widget.size == 1 && <h1>{widget.text}</h1>}
+                {widget.size == 2 && <h2>{widget.text}</h2>}
+                {widget.size == 3 && <h3>{widget.text}</h3>}
             </div>
         )
-    }
+    };

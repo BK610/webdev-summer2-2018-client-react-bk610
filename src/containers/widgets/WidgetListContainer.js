@@ -1,51 +1,91 @@
-import {connect} from 'react-redux'
-import WidgetListComponent from './WidgetListComponent'
+import React from 'react';
+import {connect} from 'react-redux';
+import Widget from './Widget';
+import * as actions from '../../actions/index'
 
-const DB_URL = "https://cs4550-summer2-2018-bk610.herokuapp.com/api/widget";
+class WidgetList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            lessonId: "",
+        };
+
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentWillReceiveProps = this.componentWillReceiveProps.bind(this);
+        this.renderWidgets = this.renderWidgets.bind(this);
+        this.render = this.render.bind(this);
+    }
+
+    componentDidMount() {
+        this.setState({lessonId: this.props.match.params.lessonId},
+            () => this.props.findAllWidgets(this.state.lessonId));
+    }
+
+    componentWillReceiveProps(props) {
+        if (props.match.params.lessonId !== this.state.lessonId) {
+            this.setState({lessonId: props.match.params.lessonId},
+                () => this.props.findAllWidgets(this.state.lessonId));
+        }
+    }
+
+    renderWidgets() {
+        return (
+            <div>
+                <ul className="list-group">
+                    {this.props.widgets.map(widget => (
+                        <Widget widget={widget}
+                                key={widget.id}/>
+                    ))}
+                </ul>
+            </div>
+        )
+    }
+
+    render() {
+        return (
+            <div>
+                <h3>Widgets</h3>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <button onClick={() => this.props.createWidget()}
+                                className="btn btn-success float-left">
+                            Create Widget
+                        </button>
+                        <button onClick={() => this.props.saveWidgets(this.state.lessonId)}
+                                className="btn btn-primary float-right">
+                            Save
+                        </button>
+                        <button onClick={() => this.props.previewWidgets()}
+                                className="btn btn-secondary"
+                                hidden={this.props.preview}>
+                            Preview
+                        </button>
+                        <button onClick={() => this.props.previewWidgets()}
+                                className="btn btn-secondary"
+                                hidden={!this.props.preview}>
+                            Edit
+                        </button>
+                    </li>
+                    {this.renderWidgets()}
+                </ul>
+            </div>
+        );
+    }
+}
 
 const stateToPropertyMapper = state => (
     {
-        widgets: state.widgets
+        widgets: state.widgets,
+        preview: state.preview
     }
 )
 
 const dispatcherToPropertyMapper = dispatch => (
     {
-        deleteWidget: wid => dispatch({
-            type: 'DELETE_WIDGET',
-            widgetId: wid
-        }),
-        createWidget: w => dispatch({
-            type: 'CREATE_WIDGET',
-            widget: w
-        }),
-        updateWidget: w => dispatch({
-            type: 'UPDATE_WIDGET',
-            widget: w
-        }),
-        saveWidgets: () => dispatch({
-            type: 'SAVE_WIDGETS'
-        }),
-        loadAllWidgets: () => {
-            fetch(DB_URL)
-                .then(response => response.json())
-                .then(widgets => dispatch({
-                    type: 'FIND_ALL_WIDGETS',
-                    widgets: widgets
-                }))
-        },
-        up: (widgetId) => {
-            dispatch({
-                type: 'UP',
-                widgetId: widgetId
-            })
-        },
-        down: (widgetId) => {
-            dispatch({
-                type: 'DOWN',
-                widgetId: widgetId
-            })
-        }
+        createWidget: () => actions.createWidget(dispatch),
+        saveWidgets: (lessonId) => actions.save(dispatch, lessonId),
+        findAllWidgets: (lessonId) => actions.findAllWidgetsForLesson(dispatch, lessonId),
+        previewWidgets: () => actions.preview(dispatch)
     }
 )
 
@@ -53,6 +93,6 @@ const WidgetListContainer =
     connect(
         stateToPropertyMapper,
         dispatcherToPropertyMapper)
-    (WidgetListComponent)
+    (WidgetList);
 
-export default WidgetListContainer
+export default WidgetListContainer;

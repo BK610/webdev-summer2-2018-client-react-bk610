@@ -1,41 +1,41 @@
 import React from 'react'
 
-export const ListWidget = ({widget, updateWidget}) => {
-    let text
-    let ordered
-    return(
-        <div>
-            <h3>List Widget</h3>
-            <textarea ref={node => text = node}
-                      className="form-control"
-                      onChange={() => {
-                          widget.listItems = text.value;
-                          updateWidget(widget)
-                      }}
-                      value={widget.listItems}></textarea>
-            <label><input ref={node => ordered = node}
-                          onClick={() => {
-                              widget.ordered = ordered.checked
-                              updateWidget(widget)
-                          }}
-                          checked={widget.ordered}
-                          type="checkbox"/> Ordered</label>
-            <h4>Preview</h4>
-            { !widget.ordered &&
-            <ul>
-                {widget.listItems.split('\n').map((item, index) => (
-                    <li key={index}>{item}</li>
-                ))}
-            </ul>
-            }
-            {widget.ordered &&
-            <ol>
-                {widget.listItems.split('\n').map((item, index) => (
-                    <li key={index}>{item}</li>
-                ))}
-            </ol>
-            }
-
-        </div>
-    );
-}
+export const ListWidget =
+    ({widget, preview, textChange, titleChange, listTypeChange}) => {
+        let text;
+        let title;
+        let listType;
+        return (
+            <div>
+                <div hidden={preview}>
+                    <h3>List Widget</h3>
+                    <textarea onChange={() => textChange(widget.id, text.value)}
+                              value={widget.text}
+                              className="form-control"
+                              placeholder="One list item per row"
+                              ref={node => text = node}/>
+                    <input onChange={() => titleChange(widget.id, title.value)}
+                           value={widget.name}
+                           className="form-control"
+                           placeholder="Widget name"
+                           ref={node => title = node}/>
+                    <select onChange={() => listTypeChange(widget.id, listType.value)}
+                            value={widget.listType}
+                            className="form-control"
+                            ref={node => listType = node}>
+                        <option value="Ordered">Ordered</option>
+                        <option value="Unordered">Unordered</option>
+                    </select>
+                    <h5>
+                        Preview
+                    </h5>
+                </div>
+                <ul hidden={widget.listType !== 'ul'}>
+                    {widget.text.split("\n").map(token => (<li key={token + Math.random()}>{token}</li>))}
+                </ul>
+                <ol hidden={widget.listType !== 'ol'}>
+                    {widget.text.split("\n").map(token => (<li key={token + Math.random()}>{token}</li>))}
+                </ol>
+            </div>
+        )
+    };

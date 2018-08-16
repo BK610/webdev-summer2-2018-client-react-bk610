@@ -1,75 +1,161 @@
+import * as constants from '../constants/index'
+
 let initialState = {
-    widgets: [
-        // {order: 2, title: 'List Widget 1', id: 2, widgetType: 'LIST', ordered: false, listItems: 'item 1\nitem 2\nitem 3'},
-        // {order: 3, title: 'Heading Widget 1', id: 1, widgetType: 'HEADING'},
-        // {order: 4, title: 'Widget 1', id: 123, widgetType: 'WT1'},
-        // {order: 5, title: 'Widget 2', id: 234, widgetType: 'WT2'},
-        // {order: 6, title: 'Widget 3', id: 345, widgetType: 'WT3'},
-        // {order: 7, title: 'Widget 4', id: 456, widgetType: 'WT1'},
-    ]
+    widgets: [],
+    preview: false
 };
 
-export const widgetReducer = (
-    state=initialState,
-    action) => {
-
+export const widgetReducer = (state = initialState, action) => {
     let fromIndex;
     let toIndex;
-    let widgets = [];
-    let state2;
+
+    let changedState = Object.assign({}, state);
+
     switch (action.type) {
-        case 'UP':
+        case constants.UP:
             fromIndex = state.widgets.findIndex(widget => widget.id === action.widgetId);
             toIndex = fromIndex--;
-            state2 = JSON.parse(JSON.stringify(state));
-            // state2 = Object.assign(state);
-            state2.widgets.splice(toIndex, 0, state2.widgets.splice(fromIndex, 1)[0]);
-            return state2;
-        case 'DOWN':
+            changedState = JSON.parse(JSON.stringify(state));
+            changedState.widgets.splice(toIndex, 0, changedState.widgets.splice(fromIndex, 1)[0]);
+            return changedState;
+        case constants.DOWN:
             fromIndex = state.widgets.findIndex(widget => widget.id === action.widgetId);
             toIndex = fromIndex++;
-            state2 = JSON.parse(JSON.stringify(state));
-            // state2 = Object.assign(state);
-            state2.widgets.splice(toIndex, 0, state2.widgets.splice(fromIndex, 1)[0]);
-            return state2;
-        case 'FIND_ALL_WIDGETS':
-            console.log(action.widgets);
+            changedState = JSON.parse(JSON.stringify(state));
+            changedState.widgets.splice(toIndex, 0, changedState.widgets.splice(fromIndex, 1)[0]);
+            return changedState;
+        case constants.FIND_ALL_WIDGETS:
             return {
-                widgets: action.widgets
+                widgets: action.widgets,
+                preview: state.preview
             };
-        case 'SAVE_WIDGETS':
-            fetch('http://localhost:8080/api/widget', {
+        case constants.FIND_ALL_WIDGETS_FOR_LESSON:
+            return {
+                widgets: action.widgets,
+                preview: state.preview
+            };
+        case constants.SAVE:
+            fetch(constants.SERVER_API_URL + 'lesson/' + action.lessonId + '/widget/save', {
                 method: 'post',
                 headers: {
                     'content-type': 'application/json'
                 },
                 body: JSON.stringify(state.widgets)
-            });
+            })
+                .then(() => window.alert("Widgets saved."));
             return state;
-        case 'DELETE_WIDGET':
+        case constants.DELETE_WIDGET:
             return {
                 widgets: state.widgets.filter(
                     widget => widget.id !== action.widgetId
-                )
+                ),
+                preview: state.preview
             }
-        case 'CREATE_WIDGET':
+        case constants.CREATE_WIDGET:
+            let newId;
+            if (state.widgets.length === 0) {
+                newId = 1;
+            } else {
+                newId = Math.max(...state.widgets.map(widget => widget.id)) + 1;
+            }
+            let newWidget = {
+                id: newId,
+                title: 'New Widget',
+                widgetType: constants.HEADING_WIDGET,
+                text: '',
+                size: '1',
+                listType: 'ul',
+                url: '',
+            };
             return {
                 widgets: [
                     ...state.widgets,
-                    action.widget
-                ]
+                    newWidget
+                ],
+                preview: state.preview
             }
-        case 'UPDATE_WIDGET':
+        case constants.PREVIEW:
+            changedState.preview = !state.preview;
+            return changedState;
+        case constants.CHANGE_WIDGET_TYPE:
+            console.log(state);
+            console.log(action);
+            changedState = {
+                widgets: state.widgets.filter((widget) => {
+                    if (widget.id === action.widgetId) {
+                        widget.widgetType = action.widgetType
+                    }
+                    return true;
+                }),
+                preview: state.preview
+            };
+            return JSON.parse(JSON.stringify(changedState));
+        case constants.CHANGE_WIDGET_TEXT:
+            changedState = {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.widgetId) {
+                        widget.text = action.text
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            };
+            return changedState;
+        case constants.CHANGE_HEADING_SIZE:
+            changedState = {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.widgetId) {
+                        widget.size = action.size
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            };
+            return changedState;
+        case constants.CHANGE_WIDGET_TITLE:
+            changedState = {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.widgetId) {
+                        widget.title = action.title
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            };
+            return changedState;
+        case constants.CHANGE_URL:
+            changedState = {
+                widgets: state.widgets.map(widget => {
+                    if (widget.id === action.widgetId) {
+                        widget.url = action.url
+                    }
+                    return Object.assign({}, widget)
+                }),
+                preview: state.preview
+            };
+            return changedState;
+        case constants.CHANGE_LIST_TYPE:
+            console.log(state);
+            console.log(action);
+            // changedState = {
+            //     widgets: state.widgets.map(widget => {
+            //         if (widget.id === action.widgetId) {
+            //             widget.listType = action.listType
+            //         }
+            //         return Object.assign({}, widget)
+            //     }),
+            //     preview: state.preview
+            // };
+            // return changedState;
             return {
                 widgets: state.widgets.map(widget => {
-                    if(widget.id === action.widget.id) {
-                        return action.widget
-                    } else {
-                        return widget
+                    if (widget.id === action.widgetId) {
+                        widget.listType = action.listType
                     }
+                    return Object.assign({}, widget)
                 })
-            }
+            };
         default:
-            return state
+            return changedState
     }
 }

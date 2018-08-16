@@ -1,8 +1,9 @@
 import React from 'react'
+import {Route} from "react-router-dom";
 import CourseService from "../../services/CourseService";
 import ModuleList from "../modules/ModuleList"
-import {Route} from "react-router-dom";
 import LessonList from "../lessons/LessonList";
+import WidgetListContainer from "../widgets/WidgetListContainer";
 
 export default class CourseEditor extends React.Component {
     constructor(props) {
@@ -52,13 +53,16 @@ export default class CourseEditor extends React.Component {
                     </div>
                 </div>
                 <div className="row" style={{paddingTop: 20}}>
-                    <div className="col-sm">
+                    <div className="col-md-4">
                         <ModuleList courseId={this.state.courseId}/>
                     </div>
-                    <div className="col-sm">
-                        {/*<LessonList courseId={this.state.courseId}/>*/}
+                    <div className="col-md-8">
                         <Route path="/course/:courseId/module/:moduleId"
                                component={LessonList}>
+                        </Route>
+                        <Route
+                            path="/course/:courseId/module/:moduleId/lesson/:lessonId"
+                            component={WidgetListContainer}>
                         </Route>
                     </div>
                 </div>
