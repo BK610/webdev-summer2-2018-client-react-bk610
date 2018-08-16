@@ -78,8 +78,6 @@ export const widgetReducer = (state = initialState, action) => {
             changedState.preview = !state.preview;
             return changedState;
         case constants.CHANGE_WIDGET_TYPE:
-            console.log(state);
-            console.log(action);
             changedState = {
                 widgets: state.widgets.filter((widget) => {
                     if (widget.id === action.widgetId) {
@@ -135,18 +133,6 @@ export const widgetReducer = (state = initialState, action) => {
             };
             return changedState;
         case constants.CHANGE_LIST_TYPE:
-            console.log(state);
-            console.log(action);
-            // changedState = {
-            //     widgets: state.widgets.map(widget => {
-            //         if (widget.id === action.widgetId) {
-            //             widget.listType = action.listType
-            //         }
-            //         return Object.assign({}, widget)
-            //     }),
-            //     preview: state.preview
-            // };
-            // return changedState;
             return {
                 widgets: state.widgets.map(widget => {
                     if (widget.id === action.widgetId) {

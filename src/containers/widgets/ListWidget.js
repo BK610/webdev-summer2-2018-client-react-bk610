@@ -23,8 +23,8 @@ export const ListWidget =
                             value={widget.listType}
                             className="form-control"
                             ref={node => listType = node}>
-                        <option value="Ordered">Ordered</option>
-                        <option value="Unordered">Unordered</option>
+                        <option value="ol">Ordered</option>
+                        <option value="ul">Unordered</option>
                     </select>
                     <h5>
                         Preview

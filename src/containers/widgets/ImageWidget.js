@@ -23,7 +23,7 @@ export const ImageWidget =
                     </h5>
                 </div>
                 <div id="image-div" style={{overflow: `hidden`}}>
-                    <img src={widget.src}/>
+                    <img src={widget.url}/>
                 </div>
             </div>
         );

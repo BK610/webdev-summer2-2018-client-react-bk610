@@ -29,7 +29,7 @@ export const LinkWidget =
                     </h5>
                 </div>
                 <div id="image-div" style={{overflow: `hidden`}}>
-                    <a href={widget.href}>{widget.text}</a>
+                    <a href={widget.url}>{widget.text}</a>
                 </div>
             </div>
         );
